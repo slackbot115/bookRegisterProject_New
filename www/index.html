@@ -11,6 +11,7 @@
 	<link rel="stylesheet" href="lib/onsenui/css/onsenui.css">
 	<link rel="stylesheet" href="lib/onsenui/css/onsen-css-components.css">
 	<link rel="stylesheet" href="css/style.css">
+  <script src="components/banco.js"></script>
 
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -39,57 +40,6 @@
     }
 	</script>
 </head>
-
- <script>
-    $(function(){
-      $('#cadastro').click(function(){
-          var parametros = {
-            'titulo': $('#titulo').val(),
-            'autor': $('#autor').val(),
-            'ano': $('#ano').val(),
-            'isbm': $('#isbn').val()
-          }
-          $.post({
-            url: 'https://livraria-do-ze-luskas8.c9users.io/cadastrar.php',
-            data: parametros,
-            success: function(mensagem){
-              alert(mensagem)
-            }
-          })
-      })
-    })
-
-// função de refresh
-  function refresh(){
-    $("#listar").html("")
-    preencherCampos()
-  }
-
-// funcao listar
-  function preencherCampos(){
-    $.ajax({
-      type: "post",
-      url: 'https://livraria-do-ze-luskas8.c9users.io/listar.php',
-      dataType: "json",
-      success: function(data){
-        var livroLista = "";
-        $.each(data.livros, function(i, parametros){
-          livroLista += "<option value='" + parametros.codigo + "'>" + parametros.titulo + "</option>";
-        });
-        $("#listar").html(livroLista);
-      }
-    });
-  }
-
-  $(document).ready(function(){
-    refresh()
-
-    $('#listar').click(function(){
-      refresh()
-    })
-  })
-
-  </script>
 
 <body>
 	<ons-page>
@@ -154,13 +104,61 @@
 	</ons-template>
 
 	<ons-template id="tab2.html">
+
 		<ons-page id="second-page">
-      <div class="row">
+      <div class="row sec">
+        <div class="backgroundOne">
         <div class="col-xs-12">
           <h3>Listar Livros</h3>
-          <select id="listar" class="form-control">
-          </select>
+          <select id="listar" class="form-control"></select>
         </div>
+      </div>
+
+      <div class="row sec">
+        <div class="col-xs-12">
+          <h4>Título:</h4>
+          <input type="text" class="form-control" readonly />
+        </div>
+      </div>
+
+      <div class="row sec">
+        <div class="col-xs-12">
+          <h4>Autor:</h4>
+          <input type="text" class="form-control" readonly />
+        </div>
+      </div>
+
+      <div class="row sec">
+        <div class="col-xs-6">
+          <h4>Ano:</h4>
+          <input type="text" class="form-control" readonly />
+        </div>
+
+        <div class="col-xs-6">
+          <h4>ISBN:</h4>
+          <input type="text" class="form-control" readonly />
+        </div>
+      </div>
+
+      <div class="row sequencia">
+
+	      <div class="col-xs-3">
+          <button class="btn btn-warning">Editar</button>
+        </div>
+
+        <div class="col-xs-3">
+          <button class="btn btn-success">Salvar</button>
+        </div>
+
+        <div class="col-xs-3">
+          <button class="btn btn-danger">Deletar</button>
+        </div>
+
+        <div class="col-xs-3">
+          <button class="btn btn-dark">Cancelar</button>
+        </div>
+
+      </div>
       </div>
 
       <!-- <table id="table">
@@ -172,4 +170,55 @@
 	</ons-template>
 </body>
 
+
+  <style type="text/css">
+
+    .sec{
+      padding: 5%;
+      padding-top: 0;
+    }
+
+    .col-xs-3{
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .btn-dark{
+      background: #2b2b2b; 
+      color: white;
+    }
+
+    .btn-dark:hover{
+      background: white; 
+      color: #2b2b2b;
+      border: solid 1px #2b2b2b;
+    }
+
+    .btn-danger:hover{
+      background: white; 
+      color: #d9534f;
+      border: solid 1px #d9534f;
+    }
+
+    .btn-success:hover{
+      background: white; 
+      color: #5cb85c;
+      border: solid 1px #5cb85c;
+    }
+
+    .btn-warning:hover{
+      background: white; 
+      color: #f0ad4e;
+      border: solid 1px #f0ad4e;
+    }
+
+    button.btn{
+      height: 7%;
+    }
+
+    .sequencia{
+      padding: 10%;
+    }
+
+  </style>
 </html>
