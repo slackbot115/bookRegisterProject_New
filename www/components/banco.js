@@ -35,7 +35,7 @@ function popularSelect(){
     url: 'https://livraria-do-ze-luskas8.c9users.io/listar.php',
     dataType: "json",
     success:function(data){
-      var livroLista = "";
+      var livroLista = "<option value='abstract'>Selecionar um Livro</option>";
       $.each(data.livros, function(i, parametros){
         livroLista += "<option value='" + parametros.codigo + "'>" + parametros.titulo + "</option>";
       });
@@ -76,7 +76,7 @@ $(document).on("change", "#listar", function(){
 
 $(document).on('click', '#edit', function(){
 
-  if($('#title').length > 0){
+  if($('#title').length > 0 && $("option:selected", ("#listar")).val() != "abstract"){
 
     lastTitle = $('#title').val();
     lastAutor = $('#writer').val();
@@ -108,9 +108,68 @@ $(document).on("click", "#cancel", function(){
     $('#year').val(lastYear);
     $('#number').val(lastISBN);
 
-    $("#title").attr("readonly", true);
-    $("#writer").attr("readonly", true);
-    $("#year").attr("readonly", true);
-    $("#number").attr("readonly", true);
+    desabilitaCampos();
+
+  }
+});
+
+function desabilitaCampos(){
+  $("#title").attr("readonly", true);
+  $("#writer").attr("readonly", true);
+  $("#year").attr("readonly", true);
+  $("#number").attr("readonly", true);
+}
+
+//salvar
+
+$(document).on("click", "#save", function(){
+  if($('#title')[0].hasAttribute("readonly")){
+    alert("It was a mistake, I presume.");
+  }else if($('#title').val() == lastTitle && $('#writer').val() == lastAutor && 
+           $('#year').val() == lastYear && $('#number').val() == lastISBN){
+    alert("The informations given look like the same. There is no use to save 'em.");
+    desabilitaCampos();
+  }else{
+    
+    
+    var parametros = {
+    "codigo": $("#code").val(),
+    "titulo": $("#title").val(),
+    "autor": $('#writer').val(),
+    "ano": $('#year').val(),
+    "isbn": $('#number').val()
+    }
+
+    $.ajax({
+      type: "POST",
+      url: "https://livraria-do-ze-luskas8.c9users.io/update.php",
+      data:parametros,
+      success:function(data){
+        navigator.notification.alert(data);
+        location.reload();
+      },
+      error:function(data){
+        navigator.notification.alert(data);
+      }
+    });
+  }
+});
+
+// deletar
+
+$(document).on("click", "#delete", function(){
+  if(confirm("Are you sure you want to delete this book?")){
+    $.ajax({
+      type: "get",
+      url: "https://livraria-do-ze-luskas8.c9users.io/deletar.php",
+      data:"codigo="+$("#code").val(),
+      success: function(data){
+        navigator.notification.alert(data);
+        location.reload();
+      },
+      error:function(data){
+        navigator.notification.alert(data);
+      }
+    })
   }
 });
