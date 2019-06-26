@@ -11,7 +11,6 @@
 	<link rel="stylesheet" href="lib/onsenui/css/onsenui.css">
 	<link rel="stylesheet" href="lib/onsenui/css/onsen-css-components.css">
 	<link rel="stylesheet" href="css/style.css">
-  <script src="components/banco.js"></script>
 
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -39,6 +38,15 @@
       document.documentElement.setAttribute('ons.disableAutoStyling', '');
     }
 	</script>
+
+  <script src="components/banco.js"></script>
+
+   <script>
+      $(document).ready(function(){
+        popularSelect();
+      });
+    </script>
+
 </head>
 
 <body>
@@ -115,47 +123,52 @@
       </div>
 
       <div class="row sec">
-        <div class="col-xs-12">
+        <div class="col-xs-4">
+          <h4>Cód.:</h4>
+          <input type="text" class="form-control" readonly id="code" />
+        </div>  
+
+        <div class="col-xs-8">
           <h4>Título:</h4>
-          <input type="text" class="form-control" readonly />
+          <input type="text" class="form-control" readonly id="title" />
         </div>
       </div>
 
       <div class="row sec">
         <div class="col-xs-12">
           <h4>Autor:</h4>
-          <input type="text" class="form-control" readonly />
+          <input type="text" class="form-control" readonly id="writer" />
         </div>
       </div>
 
       <div class="row sec">
         <div class="col-xs-6">
           <h4>Ano:</h4>
-          <input type="text" class="form-control" readonly />
+          <input type="text" class="form-control" readonly id="year" />
         </div>
 
         <div class="col-xs-6">
           <h4>ISBN:</h4>
-          <input type="text" class="form-control" readonly />
+          <input type="text" class="form-control" readonly id="number" />
         </div>
       </div>
 
       <div class="row sequencia">
 
 	      <div class="col-xs-3">
-          <button class="btn btn-warning">Editar</button>
+          <button id="edit" class="btn btn-warning">Editar</button>
         </div>
 
         <div class="col-xs-3">
-          <button class="btn btn-success">Salvar</button>
+          <button id="save" class="btn btn-success">Salvar</button>
         </div>
 
         <div class="col-xs-3">
-          <button class="btn btn-danger">Deletar</button>
+          <button id="delete" class="btn btn-danger">Deletar</button>
         </div>
 
         <div class="col-xs-3">
-          <button class="btn btn-dark">Cancelar</button>
+          <button id="cancel" class="btn btn-dark">Cancelar</button>
         </div>
 
       </div>
@@ -166,6 +179,7 @@
           <img id='img' src='https://barcode.tec-it.com/barcode.ashx?data=9787270245256&code=ISBN13&multiplebarcodes=false&translate-esc=false&unit=Fit&dpi=96&imagetype=Png&rotation=0&color=%23000000&bgcolor=%23ffffff&qunit=Mm&quiet=0' alt='Barcode Generator TEC-IT'/>
         </tr>
       </table> -->
+
 		</ons-page>
 	</ons-template>
 </body>
@@ -188,7 +202,12 @@
       color: white;
     }
 
-    .btn-dark:hover{
+    .btn-dark:focus{
+      background: #2b2b2b; 
+      color: white;
+    }
+
+    /* .btn-dark:hover{
       background: white; 
       color: #2b2b2b;
       border: solid 1px #2b2b2b;
@@ -210,7 +229,7 @@
       background: white; 
       color: #f0ad4e;
       border: solid 1px #f0ad4e;
-    }
+    } */
 
     button.btn{
       height: 7%;
